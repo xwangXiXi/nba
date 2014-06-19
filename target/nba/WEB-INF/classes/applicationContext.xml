@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-3.0.xsd
+			http://www.springframework.org/schema/tx   
+   		 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+   		 	http://www.springframework.org/schema/aop  
+   		 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"  >
+	
+	
+		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 标准配置 -->
+				<value>classpath*:/application.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Spring注解 转换Bean   同时注入-->
+	<context:component-scan base-package="com.nba.dao"/>
+	<context:component-scan base-package="com.nba.service"/>
+	
+		<!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+		<!-- Connection Info  -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- Connection Pooling Info 
+			<property name="maxIdle" value="${dbcp.maxIdle}" />
+			<property name="maxActive" value="${dbcp.maxActive}" />
+			<property name="defaultAutoCommit" value="true" />
+			<property name="timeBetweenEvictionRunsMillis" value="3600000" />
+			<property name="minEvictableIdleTimeMillis" value="3600000" />
+		-->
+	</bean>
+		<!-- DBCP数据源 -->
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="dataSource" />
+		
+		<!--事务管理器 -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+			  p:dataSource-ref="dataSource" />
+		<aop:config proxy-target-class="true">
+				<aop:pointcut id="serviceMethod" expression="execution(* com.nba.service..*(..))"/>
+				<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
+		</aop:config>
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+				<tx:attributes>
+						<tx:method name="*"/>					
+				</tx:attributes>
+		</tx:advice>
+		
+</beans>
