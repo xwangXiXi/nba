@@ -14,13 +14,13 @@ public class TestUserService {
 	@Autowired
 	private UserService userService;
 	
-	public void hasMatchUser(){
-		boolean bool1 = userService.hasMatchUser("superadmin","superadmin");
-		assertTrue(bool1);
-	}
-
-	private void assertTrue(boolean bool1) {
-		System.out.println(bool1);
-	}
+//	public void hasMatchUser(){
+//		boolean bool1 = userService.hasMatchUser("superadmin","superadmin");
+//		assertTrue(bool1);
+//	}
+//
+//	private void assertTrue(boolean bool1) {
+//		System.out.println(bool1);
+//	}
 
 }

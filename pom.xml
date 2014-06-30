@@ -8,23 +8,12 @@
   <name>nba Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
-		<hibernate.version>4.2.0.Final</hibernate.version>
 		<mysql.connector.version>5.1.21</mysql.connector.version>
 		<spring.version>3.2.2.RELEASE</spring.version>
 	</properties>
 	
 	<dependencies>
 		<!-- DB related dependencies -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -107,8 +96,43 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.10</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.2.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.1.Final</version>
+		</dependency>
+		 <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0-oracle-thin-extras</artifactId>
+            <version>0.9.0.2</version>
+        </dependency>
+        <dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-annotations</artifactId>
+	      <version>3.4.0.GA</version>
+    </dependency>
 	</dependencies>
-  <build>
-    <finalName>nba</finalName>
-  </build>
+	<build>  
+        <plugins>  
+            <plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <configuration>  
+                    <source>1.5</source>  
+                    <target>1.5</target>  
+                </configuration>  
+                <version>2.3.2</version>  
+            </plugin>  
+        </plugins>  
+    </build>  
 </project>

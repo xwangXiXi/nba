@@ -2,6 +2,12 @@ package com.nba.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="usertable")
 public class User implements Serializable {
 
 	/**
@@ -9,9 +15,11 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private int userId;
 	private String userName;
 	private String userPassword;
+	private int rid;
 	
 	public int getUserId() {
 		return userId;
@@ -31,11 +39,10 @@ public class User implements Serializable {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getRid() {
+	public int getRid() {
 		return rid;
 	}
-	public void setRid(String rid) {
+	public void setRid(int rid) {
 		this.rid = rid;
 	}
-	private String rid;
 }
